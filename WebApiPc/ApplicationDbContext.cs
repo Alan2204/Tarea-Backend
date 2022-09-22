@@ -11,6 +11,7 @@ namespace WebApiPc
         }
 
         public DbSet<Computadora> Computadoras { get; set; }
+        public DbSet<Marca> marcas { get; set; }
 
     }
 }
