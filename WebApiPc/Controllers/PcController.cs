@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace WebApiPc.Controllers
 {
     [ApiController] 
-    [Route("computadora")] //es la ruta del controlador
+    [Route("Laptops")] //es la ruta del controlador
     public class PcController: ControllerBase
     {
         private readonly ApplicationDbContext dbContext;
@@ -61,4 +61,6 @@ namespace WebApiPc.Controllers
             return Ok();
         }
     }
+
+
 }
