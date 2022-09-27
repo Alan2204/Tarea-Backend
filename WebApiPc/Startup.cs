@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace WebApiPc
 {
@@ -13,6 +14,8 @@ namespace WebApiPc
 
         public void ConfigureService(IServiceCollection services)
         {
+            services.AddControllers().AddJsonOptions(x =>
+            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles); // Sirve para evitar que el archivo json cargue informacion de manera infinita.
             
             services.AddControllers();
             services.AddDbContext<ApplicationDbContext>(options =>

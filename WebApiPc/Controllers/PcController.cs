@@ -18,7 +18,7 @@ namespace WebApiPc.Controllers
         [HttpGet] 
         public async Task<List<Computadora>> Get()
         {
-                return await dbContext.Computadoras.ToListAsync();     
+            return await dbContext.Computadoras.Include(x => x.Marca).ToListAsync();     
         }
 
         [HttpPost]
