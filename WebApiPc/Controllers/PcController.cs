@@ -18,7 +18,33 @@ namespace WebApiPc.Controllers
         [HttpGet] 
         public async Task<List<Computadora>> Get()
         {
-            return await dbContext.Computadoras.Include(x => x.Marca).ToListAsync();     
+            return await dbContext.Computadoras.ToListAsync(); 
+            
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<Computadora>> Get(int id)
+        {
+            var computadora = await dbContext.Computadoras.FirstOrDefaultAsync(x => x.Id == id);
+
+            if(computadora == null)
+            {
+                return NotFound();
+            }
+            return computadora;
+        }
+
+        [HttpGet("{Modelo}")] //se define automaticamente como string al no agregarle el tipo de valor
+        public async Task<ActionResult<Computadora>> Get(string modelo)
+        {
+            var computadora = await dbContext.Computadoras.FirstOrDefaultAsync(x => x.Modelo.Contains(modelo));
+            
+            //El condicional no se hara hasta que la peticion del await se complete.
+            if (computadora == null)
+            {
+                return NotFound();
+            }
+            return computadora;
         }
 
         [HttpPost]

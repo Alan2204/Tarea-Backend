@@ -15,25 +15,33 @@ namespace WebApiPc.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Marca>> GetBy(int id)
+        public async Task<ActionResult<List<Marca>>> GetAll()
+        {
+            return await dbContext.marcas.ToListAsync();
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<Marca>> GetById(int id)
         {
             return await dbContext.marcas.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Marca>> Post(Marca marca)
+        public async Task<ActionResult> Post(Marca marca)
         {
-            var existeModelo = await dbContext.marcas.AnyAsync(x => x.Id == marca.Id);
+            var existeModelo = await dbContext.Computadoras.AnyAsync(x => x.Id == marca.ModeloID);
+
             if(!existeModelo)
             {
-                return BadRequest($"No existe el modelo con el id: {marca.Id}");
+                return BadRequest($"No existe el modelo con el id: {marca.ModeloID}");
             }
+
             dbContext.Add(marca);
             await dbContext.SaveChangesAsync();
             return Ok();
         }
 
-        [HttpPut]
+        [HttpPut("{id:int}")]
         public async Task<ActionResult<Marca>> Put(Marca marca, int id)
         {
             var exist = await dbContext.marcas.AnyAsync(x => x.Id == id);
@@ -50,7 +58,7 @@ namespace WebApiPc.Controllers
             return Ok();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
             var exist = await dbContext.marcas.AnyAsync(x => x.Id == id);

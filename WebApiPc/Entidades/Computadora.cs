@@ -1,10 +1,16 @@
-﻿namespace WebApiPc.Entidades
+﻿
+using System.ComponentModel.DataAnnotations;
+
+
+namespace WebApiPc.Entidades
 {
     public class Computadora
     {
         public int Id { get; set; }
-        public string Modelo { get; set; }
-        public List<Marca> Marca { get; set; }
+        [Required(ErrorMessage = "El {0} es requerido")]
+        [StringLength (maximumLength: 20, ErrorMessage = "El nombre del {0} solo puede tener hasta 20 caracteres")]
+        public string Modelo { get; set; }  
+        
 
 
     }
